@@ -1,0 +1,11 @@
+[workspace]
+members = [ 
+    "node",
+    "pallets/template",
+    "runtime",
+    "contracts/erc20",
+    "contracts/flipper",
+    "contracts/incrementer",
+]
+[profile.release]
+panic = "unwind"
