@@ -1,0 +1,23 @@
+substrate-contracts-node --log info,runtime::contracts=debug 2>&1
+
+cargo contract build --manifest-path contracts/flipper/Cargo.toml
+
+cargo contract instantiate --constructor new --args "false" --suri //Alice --salt $(date +%s) --manifest-path contracts/flipper/Cargo.toml
+
+cargo contract call --contract 5CjY1aAHrB21oygBMiEbEGRTyZouojcravE9Ax85CZQMhLgV --message get --suri //Alice --dry-run --manifest-path contracts/flipper/Cargo.toml
+
+argo contract call --contract 5CjY1aAHrB21oygBMiEbEGRTyZouojcravE9Ax85CZQMhLgV --message flip --suri //Alice --manifest-path contracts/flipper/Cargo.toml
+
+cargo contract build --manifest-path contracts/incrementer/Cargo.toml 
+cargo contract build --manifest-path contracts/erc20/Cargo.toml 
+
+5DqJuy9MjAPKcLHXQHd55fhvJ9p3DvCQEfMSqLZEQ5kNRFcb
+
+cargo contract call --contract 5DqJuy9MjAPKcLHXQHd55fhvJ9p3DvCQEfMSqLZEQ5kNRFcb --message inc --args 42 --suri //Alice --manifest-path contracts/incrementer/Cargo.toml
+
+cargo contract call --contract 5DqJuy9MjAPKcLHXQHd55fhvJ9p3DvCQEfMSqLZEQ5kNRFcb --message get --args 42 --suri //Alice --dry-run --manifest-path contracts/incrementer/Cargo.toml
+
+cargo contract instantiate --constructor new --args 1_000_000 --suri //Alice --salt $(date +%s) --manifest-path contracts/erc20/Cargo.toml
+
+cargo contract call --contract 5CoQTDwff7RRra6S1k5xtjkdDkohWTUTjhSkokUt9zThhk1F \
+    --message total_supply --suri //Alice --dry-run --manifest-path contracts/erc20/Cargo.toml
